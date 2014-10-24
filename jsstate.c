@@ -144,6 +144,11 @@ js_Panic js_atpanic(js_State *J, js_Panic panic)
 	return old;
 }
 
+void js_setdebug(js_State *J, int debug)
+{
+	J->debug = debug;
+}
+
 js_State *js_newstate(js_Alloc alloc, void *actx)
 {
 	js_State *J;

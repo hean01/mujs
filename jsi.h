@@ -141,6 +141,7 @@ struct js_State
 	js_Ast *gcast; /* list of allocated nodes to free after parsing */
 
 	/* compiler state */
+	int debug;
 	int strict;
 
 	/* runtime environment */
@@ -177,6 +178,10 @@ struct js_State
 	js_Environment *gcenv;
 	js_Function *gcfun;
 	js_Object *gcobj;
+
+	/* debug info */
+	const char *curfile;
+	int curline;
 
 	/* environments on the call stack but currently not in scope */
 	int envtop;

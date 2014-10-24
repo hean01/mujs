@@ -36,6 +36,8 @@ js_Panic js_atpanic(js_State *J, js_Panic panic);
 void js_freestate(js_State *J);
 void js_gc(js_State *J, int report);
 
+void js_setdebug(js_State *J, int debug);
+
 int js_dostring(js_State *J, const char *source, int report);
 int js_dofile(js_State *J, const char *filename);
 int js_ploadstring(js_State *J, const char *filename, const char *source);

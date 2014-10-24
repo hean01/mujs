@@ -23,6 +23,16 @@ static void Ep_toString(js_State *J)
 		message = js_tostring(J, -1);
 	js_pop(J, 1);
 
+	if (J->debug) {
+		js_getproperty(J, 0, "filename");
+		js_pushliteral(J, ":");
+		js_concat(J);
+		js_getproperty(J, 0, "line");
+		js_concat(J);
+		js_pushliteral(J, ": ");
+		js_concat(J);
+	}
+
 	if (!strcmp(name, ""))
 		js_pushliteral(J, message);
 	else if (!strcmp(message, ""))
@@ -34,6 +44,10 @@ static void Ep_toString(js_State *J)
 		js_pushliteral(J, message);
 		js_concat(J);
 	}
+
+	if (J->debug) {
+		js_concat(J);
+	}
 }
 
 static int jsB_ErrorX(js_State *J, js_Object *prototype)
@@ -43,6 +57,12 @@ static int jsB_ErrorX(js_State *J, js_Object *prototype)
 		js_pushstring(J, js_tostring(J, 1));
 		js_setproperty(J, -2, "message");
 	}
+	if (J->debug) {
+		js_pushstring(J, J->curfile);
+		js_setproperty(J, -2, "filename");
+		js_pushnumber(J, J->curline);
+		js_setproperty(J, -2, "line");
+	}
 	return 1;
 }
 
@@ -51,6 +71,12 @@ static void js_newerrorx(js_State *J, const char *message, js_Object *prototype)
 	js_pushobject(J, jsV_newobject(J, JS_CERROR, prototype));
 	js_pushstring(J, message);
 	js_setproperty(J, -2, "message");
+	if (J->debug) {
+		js_pushstring(J, J->curfile);
+		js_setproperty(J, -2, "filename");
+		js_pushnumber(J, J->curline);
+		js_setproperty(J, -2, "line");
+	}
 }
 
 #define DERROR(name, Name) \

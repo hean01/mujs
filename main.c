@@ -118,6 +118,7 @@ main(int argc, char **argv)
 	int i;
 
 	J = js_newstate(NULL, NULL);
+	js_setdebug(J, 1);
 
 	js_newcfunction(J, jsB_gc, 0);
 	js_setglobal(J, "gc");

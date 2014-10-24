@@ -1533,6 +1533,11 @@ static void jsR_run(js_State *J, js_Function *F)
 
 		case OP_RETURN:
 			return;
+
+		case OP_LINENO:
+			J->curfile = F->filename;
+			J->curline = *pc++;
+			break;
 		}
 	}
 }
